@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Listado de Empleados <span class="badge bg-purple" style="background-color: #6f42c1;">VBC</span></h2>
+    <a href="{% url 'empleado_create_vbc' %}" class="btn btn-primary">Registrar Nuevo Empleado (VBC)</a>
+</div>
+<div class="card shadow-sm border">
+    <table class="table table-striped mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombres y Apellidos</th>
+                <th>Correo</th>
+                <th>Sueldo</th>
+                <th>Fecha Ingreso</th>
+                <th>Cargo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+            <tr>
+                <td>{{ empleado.nombres }} {{ empleado.apellidos }}</td>
+                <td>{{ empleado.correo }}</td>
+                <td>${{ empleado.sueldo }}</td>
+                <td>{{ empleado.fecha_ingreso }}</td>
+                <td><span class="badge bg-secondary fs-6">{{ empleado.cargo.nombre }}</span></td>
+                <td>
+                    <a href="{% url 'empleado_update_vbc' empleado.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'empleado_delete_vbc' empleado.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">No hay empleados registrados en esta sección aún.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
